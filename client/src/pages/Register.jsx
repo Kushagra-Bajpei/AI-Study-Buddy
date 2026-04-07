@@ -41,7 +41,11 @@ const Register = () => {
       await register(form.name, form.email, form.password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.error || 'Registration failed. Please try again.');
+      const apiError = err.response?.data?.error;
+      const errorMessage = typeof apiError === 'string' 
+        ? apiError 
+        : (apiError?.message || 'Registration failed. Please try again.');
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

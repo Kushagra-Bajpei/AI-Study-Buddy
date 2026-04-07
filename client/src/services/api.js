@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/$/, '') + '/api' : '/api',
+  baseURL: import.meta.env.VITE_API_URL 
+    ? import.meta.env.VITE_API_URL.replace(/\/$/, '') + '/api' 
+    : 'https://ai-study-buddy-d5ag.onrender.com/api',
   headers: { 'Content-Type': 'application/json' },
 });
 
