@@ -9,7 +9,7 @@ A production-ready, full-stack AI-powered study platform built with React + Vite
 ### Prerequisites
 - Node.js 18+
 - MongoDB Atlas account (or local MongoDB)
-- Anthropic API key
+- Gemini API key
 
 ---
 
