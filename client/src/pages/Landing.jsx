@@ -18,7 +18,7 @@ const features = [
   {
     icon: <FileText className="h-6 w-6" />,
     title: 'Smart Notes',
-    desc: 'Generate structured, example-rich notes on any topic in seconds using Claude AI.',
+    desc: 'Generate structured, example-rich notes on any topic in seconds using AI Study Buddy.',
     color: 'from-blue-500 to-indigo-600',
     bg: 'bg-blue-50 dark:bg-blue-900/20',
   },
@@ -46,7 +46,7 @@ const features = [
 ];
 
 const perks = [
-  'Powered by Claude 3.5 Sonnet AI',
+  'Powered by Akshat',
   'Smart weak-area detection',
   'Personalized recommendations',
   'Dark mode & beautiful UI',
@@ -88,7 +88,7 @@ const Landing = () => {
       <section className="max-w-6xl mx-auto px-6 pt-20 pb-24 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-50 dark:bg-primary-900/30 border border-primary-100 dark:border-primary-800 text-primary-700 dark:text-primary-300 text-xs font-medium mb-6">
           <Zap className="h-3.5 w-3.5" />
-          Powered by Claude 3.5 Sonnet
+          Powered by Akshat
         </div>
 
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-white leading-[1.08] tracking-tight mb-6 text-balance">
