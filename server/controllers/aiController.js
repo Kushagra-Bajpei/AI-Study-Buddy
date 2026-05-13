@@ -1,10 +1,12 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const OpenAI = require('openai');
 const User = require('../models/User');
 const StudySession = require('../models/StudySession');
 
-// Initialize Gemini with the API KEY
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const geminiModel = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+// Initialize OpenAI with Groq API KEY and Groq base URL
+const openai = new OpenAI({
+  apiKey: process.env.GROQ_API_KEY,
+  baseURL: 'https://api.groq.com/openai/v1',
+});
 
 // Mock generators for fallback (when API quota is hit)
 const generateMockNotes = (topic, level) => {
@@ -55,19 +57,29 @@ const generateMockPlan = (topic) => {
   };
 };
 
-// Helper: Call Gemini API
+// Helper: Call Groq API
 const callAI = async (prompt, type, topic, level) => {
-  if (!process.env.GEMINI_API_KEY) {
-    console.error('❌ GEMINI_API_KEY is missing in .env!');
+  if (!process.env.GROQ_API_KEY) {
+    console.error('❌ GROQ_API_KEY is missing in .env!');
     throw new Error('API Key missing');
   }
 
   try {
-    const result = await geminiModel.generateContent(prompt);
-    const response = await result.response;
-    return { content: response.text(), fallback: false };
+    const response = await openai.chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert AI Study Buddy. Provide clear, accurate, and engaging educational content.'
+        },
+        { role: 'user', content: prompt }
+      ],
+      temperature: 0.7,
+    });
+
+    return { content: response.choices[0].message.content, fallback: false };
   } catch (error) {
-    console.warn(`⚠️ Gemini API failed (${error.message}). Falling back to Mock AI.`);
+    console.warn(`⚠️ Groq API failed (${error.message}). Falling back to Mock AI.`);
     
     if (type === 'notes') return { content: generateMockNotes(topic, level), fallback: true };
     if (type === 'quiz') return { content: JSON.stringify(generateMockQuiz(topic)), fallback: true };
